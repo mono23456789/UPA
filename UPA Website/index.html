@@ -41,6 +41,8 @@ section{padding:4.5rem 0}
 nav{position:sticky;top:0;z-index:20;background:var(--yellow);display:flex;gap:1.4rem;justify-content:center;flex-wrap:wrap;padding:.5rem 1rem;font-family:var(--head);font-size:.95rem}
 nav a{color:var(--ink);text-decoration:none}
 nav a:hover{text-decoration:underline wavy}
+nav a.ext{background:var(--ink);color:var(--yellow);padding:0 .6rem;transform:rotate(-1.5deg)}
+nav a.ext:hover{text-decoration:none;background:var(--rust);color:var(--paper)}
 
 /* hero */
 .hero{padding:2.5rem 0 3rem}
@@ -198,6 +200,7 @@ footer b{font-family:var(--head);font-weight:400;font-style:normal;color:var(--y
 <section id="album">
   <div class="wrap">
     <h2>The Album</h2>
+    <a href="#album">Album</a><a href="soundboard.html" class="ext">Audioboard</a>
     <p class="lede">Our adventures, in print. New photos appear here as they get added.</p>
     <div class="album" id="album"></div>
   </div>
