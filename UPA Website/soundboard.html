@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Audioboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #e4e8ee;
+  --panel: #f4f6f9;
+  --ink: #1a1f2b;
+  --muted: #5b6475;
+  --line: #c6ccd7;
+  --c1: #2f54eb;  /* cobalt */
+  --c2: #e8590c;  /* tangerine */
+  --c3: #0b8a6a;  /* teal */
+  --c4: #c2255c;  /* raspberry */
+  --on-pad: #ffffff;
+  --font: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141821; --panel: #1d2230; --ink: #eef1f6; --muted: #98a2b6; --line: #313950;
+    --c1: #5c7cfa; --c2: #ff8a3d; --c3: #20c997; --c4: #f06595; --on-pad: #0f131c;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141821; --panel: #1d2230; --ink: #eef1f6; --muted: #98a2b6; --line: #313950;
+  --c1: #5c7cfa; --c2: #ff8a3d; --c3: #20c997; --c4: #f06595; --on-pad: #0f131c;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+body {
+  margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font);
+  padding: calc(24px + env(safe-area-inset-top, 0px)) 20px calc(32px + env(safe-area-inset-bottom, 0px));
+  min-height: 100vh;
+}
+.wrap { max-width: 960px; margin: 0 auto; }
+
+header { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: end; justify-content: space-between; margin-bottom: 20px; }
+h1 { font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1; margin: 0; font-weight: 800; letter-spacing: -0.03em; }
+.sub { margin: 8px 0 0; color: var(--muted); font-size: 1rem; max-width: 46ch; line-height: 1.45; }
+
+.controls {
+  display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px;
+  margin-bottom: 20px;
+}
+.vol { display: flex; align-items: center; gap: 10px; flex: 1 1 200px; font-weight: 500; }
+.vol input { flex: 1; accent-color: var(--c1); min-width: 90px; }
+button, select { font: inherit; }
+.btn {
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 10px;
+  padding: 8px 14px; cursor: pointer; font-weight: 500;
+}
+.btn:hover { border-color: var(--ink); }
+.btn.loud { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn.on { background: var(--c1); color: var(--on-pad); border-color: var(--c1); }
+
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.chip {
+  border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 999px;
+  padding: 6px 14px; cursor: pointer; font-weight: 500;
+}
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+.pad {
+  --accent: var(--c1);
+  position: relative; overflow: hidden; text-align: left; cursor: pointer;
+  aspect-ratio: 1 / 1; padding: 14px; border: 0; border-radius: 18px;
+  background: var(--accent); color: var(--on-pad);
+  display: flex; flex-direction: column; justify-content: space-between;
+  box-shadow: 0 6px 0 color-mix(in srgb, var(--accent) 55%, #000);
+  transition: transform .08s, box-shadow .08s;
+}
+.pad[data-cat="2"] { --accent: var(--c2); }
+.pad[data-cat="3"] { --accent: var(--c3); }
+.pad[data-cat="4"] { --accent: var(--c4); }
+.pad:active, .pad.playing { transform: translateY(5px); box-shadow: 0 1px 0 color-mix(in srgb, var(--accent) 55%, #000); }
+.pad:focus-visible, .btn:focus-visible, .chip:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.pad .emoji { font-size: 2.2rem; line-height: 1; }
+.pad .name { font-weight: 700; font-size: 1.1rem; line-height: 1.15; }
+.pad .key {
+  position: absolute; top: 12px; right: 12px; min-width: 26px; height: 26px; padding: 0 6px;
+  display: grid; place-items: center; border-radius: 7px; font-size: .8rem; font-weight: 700;
+  background: color-mix(in srgb, var(--on-pad) 22%, transparent);
+}
+.pad .bar { position: absolute; left: 0; bottom: 0; height: 6px; width: 0; background: var(--on-pad); opacity: .85; }
+.empty { color: var(--muted); padding: 32px 0; text-align: center; }
+
+.now { margin-top: 24px; color: var(--muted); font-size: .95rem; min-height: 1.4em; }
+@media (prefers-reduced-motion: reduce) { .pad { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Audioboard</h1>
+      <p class="sub">Tap a pad or press its key to play. Replace the sample tones with your own audio files in the list below.</p>
+    </div>
+    <button class="btn" id="theme" type="button">Switch theme</button>
+  </header>
+
+  <section class="controls" aria-label="Playback controls">
+    <label class="vol">Volume
+      <input id="vol" type="range" min="0" max="1" step="0.01" value="0.8">
+    </label>
+    <button class="btn" id="overlap" type="button" aria-pressed="true">Overlap: on</button>
+    <button class="btn" id="loop" type="button" aria-pressed="false">Loop: off</button>
+    <button class="btn loud" id="stop" type="button">Stop all</button>
+  </section>
+
+  <nav class="filters" id="filters" aria-label="Filter by category"></nav>
+  <main class="grid" id="grid"></main>
+  <p class="now" id="now" aria-live="polite"></p>
+</div>
+
+<script>
+/* ============ 1. YOUR SOUNDS ============
+   name:  label on the pad
+   emoji: icon on the pad
+   key:   keyboard shortcut (one character)
+   cat:   1–4 sets the pad colour; group is the filter label
+   src:   path or URL to an audio file (mp3, wav, ogg). Leave empty to use a built-in sample tone.
+   tone:  [frequency in Hz, seconds, waveform] used only when src is empty */
+const SOUNDS = [
+  { name: "Kick",     emoji: "🥁", key: "q", cat: 1, group: "Drums",   src: "", tone: [80, 0.25, "sine"] },
+  { name: "Snare",    emoji: "🪘", key: "w", cat: 1, group: "Drums",   src: "", tone: [220, 0.15, "square"] },
+  { name: "Hi-hat",   emoji: "🔔", key: "e", cat: 1, group: "Drums",   src: "", tone: [1800, 0.08, "square"] },
+  { name: "Clap",     emoji: "👏", key: "r", cat: 1, group: "Drums",   src: "", tone: [900, 0.12, "sawtooth"] },
+  { name: "Bass",     emoji: "🎸", key: "a", cat: 2, group: "Melody",  src: "", tone: [110, 0.5, "sawtooth"] },
+  { name: "Keys",     emoji: "🎹", key: "s", cat: 2, group: "Melody",  src: "", tone: [440, 0.6, "triangle"] },
+  { name: "Lead",     emoji: "🎷", key: "d", cat: 2, group: "Melody",  src: "", tone: [660, 0.5, "sawtooth"] },
+  { name: "Chime",    emoji: "✨", key: "f", cat: 2, group: "Melody",  src: "", tone: [1320, 0.8, "sine"] },
+  { name: "Airhorn",  emoji: "📣", key: "z", cat: 3, group: "Effects", src: "", tone: [520, 0.7, "sawtooth"] },
+  { name: "Laser",    emoji: "🔫", key: "x", cat: 3, group: "Effects", src: "", tone: [1500, 0.3, "square"] },
+  { name: "Whoosh",   emoji: "💨", key: "c", cat: 3, group: "Effects", src: "", tone: [300, 0.6, "triangle"] },
+  { name: "Applause", emoji: "🎉", key: "v", cat: 3, group: "Effects", src: "", tone: [700, 0.4, "sawtooth"] },
+  { name: "Hello",    emoji: "👋", key: "1", cat: 4, group: "Voice",   src: "", tone: [350, 0.3, "sine"] },
+  { name: "Wow",      emoji: "😮", key: "2", cat: 4, group: "Voice",   src: "", tone: [500, 0.4, "sine"] },
+  { name: "Nope",     emoji: "🙅", key: "3", cat: 4, group: "Voice",   src: "", tone: [180, 0.35, "sine"] },
+  { name: "Thanks",   emoji: "🙏", key: "4", cat: 4, group: "Voice",   src: "", tone: [400, 0.5, "triangle"] }
+];
+
+/* ============ 2. ENGINE ============ */
+const $ = id => document.getElementById(id);
+const grid = $("grid"), filtersEl = $("filters"), now = $("now");
+let ctx, overlap = true, loop = false, volume = 0.8, filter = "All";
+const active = new Set();   // { stop, pad }
+
+function audioCtx() {
+  if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+  if (ctx.state === "suspended") ctx.resume();
+  return ctx;
+}
+
+function setProgress(pad, pct) { pad.querySelector(".bar").style.width = pct + "%"; }
+
+function finish(handle) {
+  active.delete(handle);
+  setProgress(handle.pad, 0);
+  if (![...active].some(h => h.pad === handle.pad)) handle.pad.classList.remove("playing");
+}
+
+function playFile(s, pad) {
+  const a = new Audio(s.src);
+  a.volume = volume; a.loop = loop;
+  const handle = { pad, audio: a, stop() { a.pause(); a.currentTime = 0; finish(handle); } };
+  a.addEventListener("timeupdate", () => setProgress(pad, (a.currentTime / (a.duration || 1)) * 100));
+  a.addEventListener("ended", () => finish(handle));
+  a.addEventListener("error", () => { finish(handle); now.textContent = "Couldn’t load " + s.src + ". Check the file path."; });
+  a.play().catch(() => finish(handle));
+  return handle;
+}
+
+function playTone(s, pad) {
+  const c = audioCtx(), [freq, dur, type] = s.tone;
+  const osc = c.createOscillator(), gain = c.createGain();
+  osc.type = type; osc.frequency.setValueAtTime(freq, c.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(Math.max(40, freq * 0.6), c.currentTime + dur);
+  gain.gain.setValueAtTime(volume * 0.5, c.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, c.currentTime + dur);
+  osc.connect(gain).connect(c.destination);
+  osc.start(); osc.stop(c.currentTime + dur);
+  const start = performance.now();
+  let raf, timer;
+  const handle = { pad, stop() { try { osc.stop(); } catch (e) {} cancelAnimationFrame(raf); clearTimeout(timer); finish(handle); } };
+  const tick = () => { setProgress(pad, Math.min(100, ((performance.now() - start) / (dur * 1000)) * 100)); raf = requestAnimationFrame(tick); };
+  tick();
+  timer = setTimeout(() => { cancelAnimationFrame(raf); finish(handle); if (loop) trigger(s, pad); }, dur * 1000);
+  return handle;
+}
+
+function trigger(s, pad) {
+  if (!overlap) stopAll();
+  pad.classList.add("playing");
+  const handle = s.src ? playFile(s, pad) : playTone(s, pad);
+  active.add(handle);
+  now.textContent = "Playing: " + s.name;
+}
+
+function stopAll() {
+  [...active].forEach(h => h.stop());
+  now.textContent = "";
+}
+
+/* ============ 3. UI ============ */
+function render() {
+  grid.innerHTML = "";
+  const list = SOUNDS.filter(s => filter === "All" || s.group === filter);
+  if (!list.length) { grid.innerHTML = '<p class="empty">No sounds in this category yet.</p>'; return; }
+  list.forEach(s => {
+    const b = document.createElement("button");
+    b.className = "pad"; b.type = "button"; b.dataset.cat = s.cat; b.dataset.key = s.key;
+    b.setAttribute("aria-label", s.name + ", key " + s.key.toUpperCase());
+    b.innerHTML = '<span class="key"></span><span class="emoji"></span><span class="name"></span><span class="bar"></span>';
+    b.querySelector(".key").textContent = s.key.toUpperCase();
+    b.querySelector(".emoji").textContent = s.emoji;
+    b.querySelector(".name").textContent = s.name;
+    b.addEventListener("click", () => trigger(s, b));
+    grid.appendChild(b);
+  });
+}
+
+function renderFilters() {
+  const groups = ["All", ...new Set(SOUNDS.map(s => s.group))];
+  filtersEl.innerHTML = "";
+  groups.forEach(g => {
+    const c = document.createElement("button");
+    c.className = "chip"; c.type = "button"; c.textContent = g;
+    c.setAttribute("aria-pressed", String(g === filter));
+    c.addEventListener("click", () => { filter = g; renderFilters(); render(); });
+    filtersEl.appendChild(c);
+  });
+}
+
+$("vol").addEventListener("input", e => { volume = +e.target.value; active.forEach(h => h.audio && (h.audio.volume = volume)); });
+$("stop").addEventListener("click", stopAll);
+$("overlap").addEventListener("click", e => {
+  overlap = !overlap; e.target.textContent = "Overlap: " + (overlap ? "on" : "off");
+  e.target.setAttribute("aria-pressed", String(overlap));
+});
+$("loop").addEventListener("click", e => {
+  loop = !loop; e.target.textContent = "Loop: " + (loop ? "on" : "off");
+  e.target.setAttribute("aria-pressed", String(loop)); e.target.classList.toggle("on", loop);
+  active.forEach(h => h.audio && (h.audio.loop = loop));
+});
+$("theme").addEventListener("click", () => {
+  const root = document.documentElement;
+  const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  root.dataset.theme = dark ? "light" : "dark";
+});
+
+document.addEventListener("keydown", e => {
+  if (e.repeat || e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.target.matches("input, select, textarea")) return;
+  if (e.key === "Escape") return stopAll();
+  const pad = grid.querySelector('.pad[data-key="' + e.key.toLowerCase() + '"]');
+  if (pad) { e.preventDefault(); pad.click(); }
+});
+
+renderFilters();
+render();
+</script>
+</body>
+</html>
