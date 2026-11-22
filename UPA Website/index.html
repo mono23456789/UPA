@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="UPA, the Union of Productive Affairs. Our logbook.">
+<meta name="theme-color" content="#f0bf1a">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="UPA: Union of Productive Affairs">
+<meta property="og:description" content="Out of the mire, one project at a time.">
+<meta property="og:image" content="https://steep-base-9652.tobetobydetermined.workers.dev/preview.png">
+<meta name="twitter:card" content="summary_large_image">
+<title>UPA — Union of Productive Affairs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=IM+Fell+DW+Pica:ital@0;1&family=Caveat:wght@600&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#e8dcbc; --paper-dk:#d9caa0; --ink:#2c2a24; --yellow:#f0bf1a;
+  --teal:#6f9a94; --rust:#b0492f; --sky:#b5ccca; --fade:#8a7f66;
+  --head:"Bowlby One","Arial Black",Impact,sans-serif;
+  --body:"IM Fell DW Pica",Georgia,"Times New Roman",serif;
+  --hand:"Caveat","Comic Sans MS",cursive;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:19px/1.55 var(--body);
+  background-image:radial-gradient(circle at 20% 10%,rgba(255,250,225,.55),transparent 45%),radial-gradient(circle at 85% 90%,rgba(176,130,60,.18),transparent 50%)}
+h1,h2,h3{font-family:var(--head);font-weight:400;line-height:1.05;margin:0}
+a{color:var(--rust)}
+:focus-visible{outline:3px solid var(--rust);outline-offset:3px}
+section{padding:4.5rem 0}
+.wrap{max-width:62rem;margin:0 auto;padding:0 1.5rem}
+
+/* signature: the yellow frame */
+.frame{border:10px solid var(--yellow);padding:1.2rem}
+
+/* nav */
+nav{position:sticky;top:0;z-index:20;background:var(--yellow);display:flex;gap:1.4rem;justify-content:center;flex-wrap:wrap;padding:.5rem 1rem;font-family:var(--head);font-size:.95rem}
+nav a{color:var(--ink);text-decoration:none}
+nav a:hover{text-decoration:underline wavy}
+
+/* hero */
+.hero{padding:2.5rem 0 3rem}
+.cover{background:var(--paper-dk);position:relative;text-align:center;padding:2.5rem 1rem}
+.cover h1{font-size:clamp(4.5rem,18vw,11rem);color:var(--ink);letter-spacing:-.02em;cursor:default}
+.cover h1:hover{animation:glitch .35s steps(2) 2;text-shadow:3px 0 var(--rust),-3px 0 var(--teal)}
+@keyframes glitch{0%{transform:translate(0)}30%{transform:translate(-4px,2px)}60%{transform:translate(4px,-2px)}100%{transform:translate(0)}}
+.cover .full{font-family:var(--head);font-size:clamp(1rem,3vw,1.5rem);margin-top:.3rem}
+.cover .mission{max-width:34rem;margin:1.2rem auto 0;font-style:italic;font-size:1.3rem}
+.sticker{position:absolute;right:1rem;top:1rem;transform:rotate(9deg);background:var(--rust);color:var(--paper);font-family:var(--hand);font-size:1.5rem;padding:.2rem .8rem;border-radius:50%;width:6.5rem;height:6.5rem;display:grid;place-items:center;text-align:center;line-height:1}
+.marquee{overflow:hidden;white-space:nowrap;background:var(--ink);color:var(--paper);font-family:var(--head);font-size:1rem;padding:.5rem 0;margin-top:2rem}
+.marquee span{display:inline-block;padding-left:100%;animation:scroll 28s linear infinite}
+@keyframes scroll{to{transform:translateX(-100%)}}
+
+h2{font-size:clamp(2rem,6vw,3.4rem);margin-bottom:.4rem}
+.lede{max-width:36rem;margin:0 0 2rem;color:#4a4638}
+.note{font-family:var(--hand);font-size:1.5rem;color:var(--rust);transform:rotate(-2deg);display:inline-block}
+
+/* manifesto */
+.manifesto p{max-width:40rem}
+.manifesto p:first-of-type::first-letter{font-family:var(--head);float:left;font-size:4.2rem;line-height:.85;padding:.3rem .5rem 0 0;color:var(--rust)}
+
+/* gang: sideways scroll */
+.rail{display:flex;gap:1.6rem;overflow-x:auto;scroll-snap-type:x mandatory;padding:1.5rem 1.5rem 2.5rem;scrollbar-color:var(--rust) var(--paper-dk)}
+.card{flex:0 0 17rem;scroll-snap-align:center;background:#f3ead0;border:1px solid var(--fade);padding:.8rem .8rem 1.2rem;box-shadow:4px 6px 0 rgba(44,42,36,.22)}
+.card:nth-child(odd){transform:rotate(-1.8deg)}
+.card:nth-child(even){transform:rotate(1.5deg) translateY(.6rem)}
+.portrait{aspect-ratio:1;background:var(--sky);display:grid;place-items:center;font-family:var(--head);font-size:4rem;color:var(--paper);filter:sepia(.35) saturate(.8);border:3px solid var(--yellow);overflow:hidden}
+.portrait img{width:100%;height:100%;object-fit:cover}
+.card h3{font-size:1.5rem;margin:.8rem 0 .1rem}
+.card .job{font-family:var(--hand);font-size:1.4rem;color:var(--rust);line-height:1}
+.card p{margin:.5rem 0;font-size:1rem;line-height:1.4}
+.card .fact{border-top:1px dashed var(--fade);padding-top:.5rem;font-style:italic}
+.card.join{background:transparent;border:3px dashed var(--fade);box-shadow:none;display:grid;place-items:center;text-align:center;color:var(--fade)}
+
+/* achievements */
+.tree-scroll{overflow:hidden;height:34rem;max-height:75vh;border:10px solid var(--yellow);background:var(--ink);background-image:linear-gradient(rgba(232,220,188,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(232,220,188,.05) 1px,transparent 1px);background-size:32px 32px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.tree-scroll.dragging{cursor:grabbing}
+.tree-box{position:relative}
+.zoom{position:absolute;right:1.2rem;bottom:1.2rem;display:flex;flex-direction:column;gap:.4rem;z-index:6}
+.zoom button{width:2.7rem;height:2.7rem;font:1.3rem var(--head);background:var(--yellow);color:var(--ink);border:3px solid var(--ink);cursor:pointer;padding:0}
+#zfit{font-size:.8rem}
+#tree{position:relative;transform-origin:0 0;will-change:transform}
+#tree.snap{transition:transform .5s cubic-bezier(.2,.9,.3,1.25)}
+#tree svg{position:absolute;inset:0;pointer-events:none}
+.node{position:absolute;width:64px;height:64px;display:grid;place-items:center;font-size:1.9rem;background:var(--paper-dk);border:4px solid var(--paper);outline:3px solid var(--ink);cursor:pointer;padding:0;font-family:inherit;color:var(--ink)}
+.node.locked{background:#4a4638;border-color:#6b6350;filter:grayscale(1);opacity:.75}
+.node:hover,.node:focus-visible{transform:scale(1.12);z-index:5}
+.tip{position:fixed;z-index:50;max-width:16rem;background:var(--paper);border:3px solid var(--yellow);box-shadow:0 0 0 3px var(--ink);padding:.6rem .8rem;pointer-events:none;display:none;font-size:.95rem;line-height:1.35}
+.tip b{font-family:var(--head);font-weight:400;display:block;font-size:1.05rem}
+.tip i{color:var(--rust)}
+.node.goal{border-radius:22px}
+.node.challenge{border-color:var(--rust);box-shadow:0 0 0 7px var(--yellow)}
+
+/* showcase: catalogue cards in a drawer */
+.hl{animation:pop 1.6s ease}
+@keyframes pop{0%,100%{filter:none}30%{filter:drop-shadow(0 0 10px var(--rust)) brightness(1.1)}}
+.cards{display:flex;flex-direction:column;position:relative;max-width:36rem;margin:0 auto;padding:3.4rem 1.2rem 1.6rem;background:#5b4631 linear-gradient(90deg,rgba(0,0,0,.2),transparent 30%,transparent 70%,rgba(0,0,0,.2));border:6px solid #2c2118;box-shadow:8px 10px 0 rgba(44,42,36,.3)}
+.cards::before{content:"ACHIEVEMENTS \00B7  A\2013Z";position:absolute;top:.9rem;left:50%;transform:translateX(-50%);background:#d9b95c;border:2px solid #2c2118;padding:.15rem 1rem;font:.8rem var(--head);letter-spacing:.14em;white-space:nowrap;color:#2c2118}
+.cc{position:relative;min-height:9.5rem;margin-top:-6.9rem;border:1px solid #b9ac86;border-radius:3px;color:#3a352b;font:.95rem/1.4rem "Special Elite","Courier New",monospace;background:linear-gradient(transparent 2.1rem,var(--rust) 2.1rem,var(--rust) calc(2.1rem + 1px),transparent calc(2.1rem + 1px)),repeating-linear-gradient(transparent 0 1.4rem,rgba(80,110,130,.3) 1.4rem calc(1.4rem + 1px)),#f2e9cc;box-shadow:0 -2px 5px rgba(0,0,0,.25);transition:transform .25s cubic-bezier(.3,1.4,.5,1),margin .35s;scroll-margin-top:5rem}
+.cc:first-child{margin-top:0}
+.cc:hover:not(.open){transform:translateY(-1.3rem)}
+.cc:has(.cc-h:focus-visible):not(.open){transform:translateY(-1.3rem)}
+.cc.open + .cc{margin-top:.6rem}
+.cc.locked{filter:grayscale(.8)}
+.cc:last-child::after,.cc.open::after{content:"";position:absolute;left:50%;bottom:.6rem;width:.9rem;height:.9rem;margin-left:-.45rem;border-radius:50%;background:#5b4631;box-shadow:inset 1px 2px 2px rgba(0,0,0,.5)}
+.cc-h{position:relative;display:block;width:100%;padding:.55rem 1.1rem 0;border:0;background:none;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.cc-t{display:block;font-size:1.05rem;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:5.5rem}
+.cc-no{position:absolute;top:.75rem;right:1.1rem;font-size:.75rem;letter-spacing:.08em;color:#6b5a33}
+.cc-d{display:block;margin-top:.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transition:opacity .2s}
+.cc:hover:not(.open) .cc-d{opacity:1}
+.cc:has(.cc-h:focus-visible):not(.open) .cc-d{opacity:1}
+.cc-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease}
+.cc.open .cc-body{grid-template-rows:1fr}
+.cc-in{overflow:hidden;min-height:0;padding:0 1.1rem}
+.cc-in p{margin:.3rem 0 0}
+.cc-st{margin:.6rem 0 1.6rem!important;color:var(--rust)}
+.cc.open .cc-d{display:none}
+.ach-photo{margin:.5rem 0}
+.ach-photo:empty{display:none}
+.ach-photo img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;transform:rotate(-1deg);border:6px solid #fff;filter:sepia(.3) saturate(.85) contrast(.95)}
+
+/* album */
+.album{display:grid;grid-template-columns:repeat(auto-fill,minmax(13rem,1fr));gap:1.4rem}
+.photo{background:#f3ead0;padding:.6rem .6rem 1rem;box-shadow:3px 5px 0 rgba(44,42,36,.2);margin:0}
+.photo:nth-child(3n+1){transform:rotate(-1.5deg)}
+.photo:nth-child(3n+2){transform:rotate(1deg)}
+.photo .ph{aspect-ratio:4/3;background:repeating-linear-gradient(45deg,var(--sky),var(--sky) 10px,#a4bdbb 10px,#a4bdbb 20px);display:grid;place-items:center;color:var(--fade);font-family:var(--hand);font-size:1.4rem;filter:sepia(.3)}
+.photo img{width:100%;aspect-ratio:4/3;object-fit:cover;filter:sepia(.3) saturate(.85) contrast(.95)}
+.photo figcaption{font-family:var(--hand);font-size:1.3rem;margin-top:.4rem;line-height:1.1}
+
+footer{background:var(--ink);color:var(--paper);text-align:center;padding:2.5rem 1rem;font-style:italic}
+footer b{font-family:var(--head);font-weight:400;font-style:normal;color:var(--yellow)}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.marquee span{animation:none;padding-left:0}.cover h1:hover{animation:none}.hl{animation:none}#tree.snap,.cc,.cc-body{transition:none}}
+@media (max-width:600px){body{font-size:17px}.sticker{display:none}}
+</style>
+</head>
+<body>
+
+<nav aria-label="Sections">
+  <a href="#top">Cover</a><a href="#manifesto">Manifesto</a><a href="#gang">The Gang</a><a href="#achievements">Achievements</a><a href="#showcase">Showcase</a><a href="#album">Album</a>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="frame">
+      <div class="cover">
+        <div class="sticker">vol. 1<br>issue 1</div>
+        <h1>UPA</h1>
+        <div class="full">The Union of Productive Affairs</div>
+        <p class="mission"> We rise out of the mire together. It is our joined power that opens the path. Excelsior.</p>
+      </div>
+    </div>
+  </div>
+  <div class="marquee" aria-hidden="true"><span>★ now building things ★ scrolling is cancelled ★ a union of productive affairs ★ no strangers allowed ★ now building things ★ scrolling is cancelled ★ chooms accepted ★ gonks forbidden ★</span></div>
+</header>
+
+<section id="manifesto" class="manifesto">
+  <div class="wrap">
+    <h2>The Manifesto</h2>
+    <p class="note">(draft, subject to jokes)</p>
+    <p>"Justice, it is all I dream of. I see it when I close my eyes and I hear it in the everymans voice. I just want to reach for it." -Anjery Mann</p>
+    <p>This site is our logbook. Our compass and our light. Keep us right, show us the way. It is for us that we build the future.</p>
+  </div>
+</section>
+
+<section id="gang">
+  <div class="wrap">
+    <h2>Meet the Gang</h2>
+    <p class="lede">Theres a lot of us and all of us are definitely real.</p>
+  </div>
+  <div class="rail" id="rail" tabindex="0" aria-label="Gang members, scroll sideways"></div>
+</section>
+
+<section id="achievements">
+  <div class="wrap">
+    <h2>Achievement Tree</h2>
+    <p class="lede">Everything we've done, Minecraft style. Drag to explore, zoom with the buttons, pinch, or ctrl + scroll, hover for a peek, click for the full story. Greyed-out nodes are still ahead of us.</p>
+    <div class="tree-box">
+      <div class="tree-scroll"><div id="tree"></div></div>
+      <div class="zoom"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">&minus;</button><button id="zfit" aria-label="Reset view">fit</button></div>
+    </div>
+  </div>
+</section>
+
+<section id="showcase">
+  <div class="wrap">
+    <h2>The Showcase</h2>
+    <p class="lede">Every achievement gets a card in the catalogue. Hover to peek, click to open the whole file. Clicking a node in the tree pulls its card for you.</p>
+    <div id="cards" class="cards"></div>
+  </div>
+</section>
+
+<section id="album">
+  <div class="wrap">
+    <h2>The Album</h2>
+    <p class="lede">Our adventures, in print. New photos appear here as they get added.</p>
+    <div class="album" id="album"></div>
+  </div>
+</section>
+
+<footer><b>UPA</b> &mdash; est. whenever we started. Out of the mire, one project at a time.</footer>
+
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script>
+/* ============ EDIT THESE LISTS TO GROW THE SITE ============ */
+
+// Members, in card order. Portraits come from photos/member-1, member-2, ... matching this order.
+const gang = [
+  { name:"Gonk Gonk Supreme",   job:"The Steel Grand Maester",      blurb:"Gotta keep the surfs up and tides bumping dude.", fact:"\"Sahhhh dude\"." },
+  { name:"Choomers Central",   job:"Of Blood, Bone and Gold",  blurb:"Write a short blurb about yourself here.", fact:"Fun fact goes here." },
+  { name:"Miguel", job:"The Jester",       blurb:"Write a short blurb about yourself here.", fact:"Fun fact goes here." }
+];
+
+// Achievements. x = column, y = height (0 is the bottom, higher goes up). `parent` draws a line from that id.
+// type (optional): "goal" = rounded frame, "challenge" = fancy frame. done:false = greyed out and locked.
+// Showcase photos: photos/achievement-1 is the first achievement in this list, achievement-2 the second, etc.
+const achievements = [
+  { id:"start",  x:3, y:0, icon:"🔥", title:"Founding the Union",  desc:"We decided to make things instead of scrolling.", done:true },
+  { id:"a",      x:1, y:1, icon:"🛠️", title:"First Project",       desc:"Replace with your first adventure.", parent:"start", done:true },
+  { id:"b",      x:3, y:1, icon:"📸", title:"First Photo Dump",    desc:"Replace with a milestone.", parent:"start", done:true },
+  { id:"c",      x:5, y:1, icon:"🤡", title:"First Inside Joke",   desc:"The joke that launched a thousand bits.", parent:"start", done:true },
+  { id:"d",      x:1, y:2, icon:"🏆", title:"Finished Something",  desc:"Replace with a finished project.", parent:"a", type:"challenge", done:false },
+  { id:"e",      x:3, y:2, icon:"🌍", title:"The Website",         desc:"You are standing in it.", parent:"b", type:"goal", done:true },
+  { id:"f",      x:3, y:3, icon:"🎪", title:"???",                 desc:"Not yet unlocked.", parent:"e", done:false }
+];
+
+// Album captions (optional). Caption 1 goes with photos/album-1, caption 2 with album-2, and so on.
+// The album grows by itself as you add album-1, album-2, album-3... files to the photos folder.
+const albumCaptions = [
+  "caption for photo 1", "caption for photo 2", "caption for photo 3"
+];
+
+/* ============ RENDERING (no need to touch) ============ */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// Gang
+document.getElementById("rail").innerHTML = gang.map((m, i) => `
+  <article class="card">
+    <div class="portrait" data-n="${i + 1}" data-name="${esc(m.name)}">${esc(m.name[0])}</div>
+    <h3>${esc(m.name)}</h3>
+    <div class="job">${esc(m.job)}</div>
+    <p>${esc(m.blurb)}</p>
+    <p class="fact">Fun fact: ${esc(m.fact)}</p>
+  </article>`).join("") +
+  `<article class="card join"><div><div class="note">you here?</div><p>More members coming.</p></div></article>`;
+
+// Image finder: looks in the photos folder for a file with this name,
+// trying each common file type. Calls back with the path, or null if nothing is there.
+const EXTS = ["jpg","jpeg","png","webp","gif"];
+function findImage(base, done){
+  let i = 0;
+  (function next(){
+    if (i >= EXTS.length) return done(null);
+    const url = `photos/${base}.${EXTS[i++]}`, im = new Image();
+    im.onload = () => done(url);
+    im.onerror = next;
+    im.src = url;
+  })();
+}
+
+// Member portraits: photos/member-1 is the first card, member-2 the second, and so on.
+// If no file exists, the card keeps its colored initial.
+document.querySelectorAll(".portrait").forEach(box => {
+  findImage("member-" + box.dataset.n, url => {
+    if (!url) return;
+    const img = document.createElement("img");
+    img.src = url; img.alt = box.dataset.name;
+    box.textContent = ""; box.appendChild(img);
+  });
+});
+
+// Album: shows album-1, album-2, ... in order, then one empty frame after the last photo found.
+const albumEl = document.getElementById("album");
+function addAlbumSlot(n){
+  const fig = document.createElement("figure");
+  fig.className = "photo";
+  fig.innerHTML = `<div class="ph">photo goes here</div><figcaption></figcaption>`;
+  albumEl.appendChild(fig);
+  findImage("album-" + n, url => {
+    if (!url) return;                       // no file: the placeholder stays
+    const cap = albumCaptions[n - 1] || "";
+    const img = document.createElement("img");
+    img.src = url; img.alt = cap || "UPA photo " + n;
+    fig.querySelector(".ph").replaceWith(img);
+    fig.querySelector("figcaption").textContent = cap;
+    addAlbumSlot(n + 1);                    // look for the next photo
+  });
+}
+addAlbumSlot(1);
+
+// Achievement tree: pan, zoom, rubber-band edges, hover peek, click to open the drawer
+(function(){
+  const S = 130, PAD = 200, NODE = 64, MINK = .35, MAXK = 2;
+  const view = document.querySelector(".tree-scroll"), tree = document.getElementById("tree"), tip = document.getElementById("tip");
+  const byId = Object.fromEntries(achievements.map(a => [a.id, a]));
+  const maxX = Math.max(...achievements.map(a => a.x)), maxY = Math.max(...achievements.map(a => a.y));
+  const px = a => [PAD + a.x * S, PAD + (maxY - a.y) * S];      // y counts upward from the bottom
+  const w = maxX * S + PAD * 2 + NODE, h = maxY * S + PAD * 2 + NODE;
+  tree.style.width = w + "px"; tree.style.height = h + "px";
+
+  let lines = "";
+  achievements.forEach(a => {
+    if (!a.parent) return;
+    const [x1,y1] = px(byId[a.parent]), [x2,y2] = px(a), my = (y1 + y2 + NODE) / 2;
+    lines += `<path d="M${x1+NODE/2} ${y1} V${my} H${x2+NODE/2} V${y2+NODE}" fill="none" stroke="${a.done ? '#f0bf1a' : '#6b6350'}" stroke-width="6"/>`;
+  });
+  tree.innerHTML = `<svg width="${w}" height="${h}" aria-hidden="true">${lines}</svg>` +
+    achievements.map(a => { const [x,y] = px(a);
+      return `<button class="node ${a.done ? '' : 'locked'} ${a.type || ''}" style="left:${x}px;top:${y}px" data-id="${a.id}" aria-label="${esc(a.title)}">${a.icon}</button>`; }).join("");
+
+  // Catalogue: one index card per achievement. Click a card to open the whole file.
+  const cards = document.getElementById("cards");
+  const pad = n => String(n).padStart(3, "0");
+  cards.innerHTML = achievements.map((a, i) => `
+    <div class="cc ${a.done ? '' : 'locked'}" id="ach-${esc(a.id)}">
+      <button class="cc-h" aria-expanded="false" aria-controls="cc-body-${i}">
+        <span class="cc-t">${esc(a.title)}</span><span class="cc-no">UPA-${pad(i + 1)}</span>
+        <span class="cc-d">${a.done ? esc(a.desc) : 'On order. Not yet acquired.'}</span>
+      </button>
+      <div class="cc-body" id="cc-body-${i}"><div class="cc-in">
+        <div class="ach-photo" data-n="${i + 1}"></div>
+        <p>${esc(a.desc)}</p>
+        <p class="cc-st">Status: ${a.done ? 'Unlocked' : 'On order (not yet acquired)'}</p>
+      </div></div>
+    </div>`).join("");
+  cards.querySelectorAll("[data-n]").forEach(box => findImage("achievement-" + box.dataset.n, url => {
+    if (!url) return;
+    const img = document.createElement("img"); img.src = url; img.alt = ""; box.appendChild(img);
+  }));
+  const toggle = (c, open) => {
+    const o = open === undefined ? !c.classList.contains("open") : open;
+    c.classList.toggle("open", o); c.querySelector(".cc-h").setAttribute("aria-expanded", o);
+  };
+  cards.querySelectorAll(".cc-h").forEach(b => b.addEventListener("click", () => toggle(b.parentElement)));
+
+  // Hover blip
+  const show = el => {
+    const a = byId[el.dataset.id], r = el.getBoundingClientRect();
+    tip.innerHTML = `<b>${esc(a.title)}</b>${esc(a.desc)}<br><i>${a.done ? 'Achievement unlocked' : 'Not yet unlocked'}</i>`;
+    tip.style.display = "block";
+    tip.style.left = Math.max(10, Math.min(r.right + 10, innerWidth - tip.offsetWidth - 10)) + "px";
+    tip.style.top = Math.max(r.top - 4, 10) + "px";
+  };
+  const hide = () => tip.style.display = "none";
+
+  // Click a node: jump to it in the showcase (or open the panel). On touch screens the first tap shows the blip.
+  const touch = matchMedia("(hover: none)").matches;
+  let armed = null;
+  const go = id => {
+    const c = document.getElementById("ach-" + id);
+    toggle(c, true); c.classList.remove("hl"); void c.offsetWidth; c.classList.add("hl");
+    c.scrollIntoView({ behavior:"smooth", block:"start" });
+  };
+  tree.querySelectorAll(".node").forEach(n => {
+    n.addEventListener("mouseenter", () => show(n)); n.addEventListener("mouseleave", hide);
+    n.addEventListener("focus", () => show(n));      n.addEventListener("blur", hide);
+    n.addEventListener("click", () => {
+      if (touch && armed !== n.dataset.id) { armed = n.dataset.id; show(n); return; }
+      hide(); go(n.dataset.id);
+    });
+  });
+
+  // Pan + zoom engine. tx/ty/k = where the tree sits and how big it is.
+  let k = 1, tx = 0, ty = 0;
+  const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+  const bounds = () => {
+    const vw = view.clientWidth, vh = view.clientHeight, cw = w * k, ch = h * k;
+    return { x: cw > vw ? [vw - cw, 0] : [(vw - cw) / 2, (vw - cw) / 2],
+             y: ch > vh ? [vh - ch, 0] : [(vh - ch) / 2, (vh - ch) / 2] };
+  };
+  // Past an edge you can still move, but with growing resistance (the rubber band)
+  const soft = (v, [lo, hi]) => { const d = v < lo ? lo - v : v > hi ? v - hi : 0;
+    if (!d) return v; const r = 90 * d / (d + 90); return v < lo ? lo - r : hi + r; };
+  const apply = snap => { tree.classList.toggle("snap", !!snap); tree.style.transform = `translate(${tx}px,${ty}px) scale(${k})`; };
+  const settle = snap => { const b = bounds(); tx = clamp(tx, ...b.x); ty = clamp(ty, ...b.y); apply(snap); };
+  const zoomAt = (f, cx, cy, snap) => {
+    const nk = clamp(k * f, MINK, MAXK);
+    tx = cx - (cx - tx) * nk / k; ty = cy - (cy - ty) * nk / k; k = nk; settle(snap); hide();
+  };
+  // Fit all the nodes into view, centered
+  const fit = snap => {
+    const ps = achievements.map(px), xs = ps.map(p => p[0]), ys = ps.map(p => p[1]);
+    const x0 = Math.min(...xs), x1 = Math.max(...xs) + NODE, y0 = Math.min(...ys), y1 = Math.max(...ys) + NODE;
+    const vw = view.clientWidth, vh = view.clientHeight, m = 70;
+    k = clamp(Math.min(vw / (x1 - x0 + 2 * m), vh / (y1 - y0 + 2 * m)), MINK, 1.3);
+    tx = vw / 2 - (x0 + x1) / 2 * k; ty = vh / 2 - (y0 + y1) / 2 * k; settle(snap);
+  };
+  const mid = () => [view.clientWidth / 2, view.clientHeight / 2];
+  document.getElementById("zin").onclick  = () => zoomAt(1.3, ...mid(), true);
+  document.getElementById("zout").onclick = () => zoomAt(1 / 1.3, ...mid(), true);
+  document.getElementById("zfit").onclick = () => fit(true);
+  view.addEventListener("wheel", e => {            // ctrl/cmd + scroll (also trackpad pinch) zooms
+    if (!(e.ctrlKey || e.metaKey)) return;
+    e.preventDefault(); const r = view.getBoundingClientRect();
+    zoomAt(Math.exp(-e.deltaY * .002), e.clientX - r.left - view.clientLeft, e.clientY - r.top - view.clientTop, false);
+  }, { passive:false });
+
+  // Drag with a mouse or one finger to pan, two fingers to pinch-zoom
+  const ptrs = new Map(); let g = null, moved = false;
+  view.addEventListener("pointerdown", e => {
+    ptrs.set(e.pointerId, { x:e.clientX, y:e.clientY }); tree.classList.remove("snap");
+    if (ptrs.size === 1) { g = { pan:true, x:e.clientX, y:e.clientY, tx, ty }; moved = false; }
+    else { g = { pan:false, pd:0 }; moved = true; }
+  });
+  view.addEventListener("pointermove", e => {
+    if (!ptrs.has(e.pointerId)) return;
+    ptrs.set(e.pointerId, { x:e.clientX, y:e.clientY });
+    if (ptrs.size >= 2 && g) {
+      const [a, b] = [...ptrs.values()], d = Math.hypot(a.x - b.x, a.y - b.y), r = view.getBoundingClientRect();
+      if (g.pd) zoomAt(d / g.pd, (a.x + b.x) / 2 - r.left - view.clientLeft, (a.y + b.y) / 2 - r.top - view.clientTop, false);
+      g.pd = d; return;
+    }
+    if (!g || !g.pan) return;
+    const dx = e.clientX - g.x, dy = e.clientY - g.y;
+    if (!moved && Math.hypot(dx, dy) > 6) { moved = true; view.classList.add("dragging"); hide(); view.setPointerCapture(e.pointerId); }
+    if (moved) { const b = bounds(); tx = soft(g.tx + dx, b.x); ty = soft(g.ty + dy, b.y); apply(false); }
+  });
+  const end = e => {
+    ptrs.delete(e.pointerId); g = null;
+    if (!ptrs.size) { view.classList.remove("dragging"); settle(true); }   // bounce back inside the edges
+  };
+  view.addEventListener("pointerup", end); view.addEventListener("pointercancel", end);
+  view.addEventListener("click", e => { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
+  addEventListener("scroll", hide, { passive:true });
+  addEventListener("resize", () => settle(false));
+  fit(false);
+})();
+</script>
+</body>
+</html>
